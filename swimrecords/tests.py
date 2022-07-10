@@ -10,10 +10,12 @@ class SwimRecordTestCase(TestCase):
 
     def test_01_validate_first_name_presence(self):
         """validates presence of first_name"""
+        # new_record = SwimRecord(first_name='', last_name='Prete', team_name="xxx")
         try:
             self.record.full_clean()
             raise Exception("full_clean should throw a validation error")
         except ValidationError as e:
+            print(e)
             self.assertTrue('This field cannot be blank.' in e.message_dict['first_name'])
 
     def test_02_validate_last_name_presence(self):
@@ -57,6 +59,7 @@ class SwimRecordTestCase(TestCase):
             raise Exception("full_clean should throw a validation error")
         except ValidationError as e:
             self.assertTrue("Ensure this value is greater than or equal to 50." in e.message_dict['distance'])
+            print(e.message_dict)
 
     def test_07_no_future_records(self):
         """does not allow records to be set in the future"""
